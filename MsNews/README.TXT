@@ -1,14 +1,45 @@
-{{Vorlage_News_bild
-|Bild=Ok.png
-|Text=Das ist ein test Text
-}}
+##Start Martin Keyler - MsNews
+require_once("$IP/extensions/MsNews/msnews.php");
+##Start Martin Keyler - MsNews
+
+
+--------------------------------- 
+Hauptseite
+--------------------------------- 
+
+{{Nachrichtenkontainer1|farbklasse}}
 
 
 
---------------------------------- Vorlage : Vorlage_News_bild
+--------------------------------- 
+Vorlage:Nachrichtenkontainer1
+--------------------------------- 
+
+<div class="{{{1}}}">{{#msnews:Bildernachrichten}}</div>
+
+
+
+--------------------------------- 
+Vorlage:Nachrichten1
+--------------------------------- 
 
 
 [[Datei:{{{Bild}}}|300px]]
 
 
 {{{Text}}}
+
+
+[[Kategorie:Bildernachrichten]]
+
+
+
+--------------------------------- 
+Text für Dropdown
+--------------------------------- 
+
+{{Nachrichten1
+|Bild=Bildname.jpg
+|Text=Das ist ein test Text 
+}}
+
