@@ -1,12 +1,14 @@
-<!-- Das gewünschte Bild -->
-
-[[Datei:Nilpferd.jpg|300px]]
-
-<!-- Der zugehörige Text -->
-
-
-Das ist ein test Text
+{{Vorlage_News_bild
+|Bild=Ok.png
+|Text=Das ist ein test Text
+}}
 
 
-<!-- Ende der News -->
-[[Kategorie:News_bild]]
+
+--------------------------------- Vorlage : Vorlage_News_bild
+
+
+[[Datei:{{{Bild}}}|300px]]
+
+
+{{{Text}}}
