@@ -15,7 +15,7 @@ Hauptseite
 Vorlage:Nachrichtenkontainer1
 --------------------------------- 
 
-<div class="{{{1}}}">{{#msnews:Bildernachrichten}}</div>
+<div style="text-align:center;" class="{{{1}}}">{{#msnews:Bildernachrichten}}</div>
 
 
 

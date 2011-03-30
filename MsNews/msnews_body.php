@@ -8,10 +8,7 @@ if( !defined( 'MEDIAWIKI' ) ) {
 function MsNewsRender( $input, $args, $parser ) {
 
   $output= "<div id='show_msnews'>".$args."</div>";
-  
-  #$output .= getLatestNews('News_bild');
-   
-  return $output; #$parser->insertStripItem( $output, $parser->mStripState );
+  return $output;
 }
 
 $wgAjaxExportList[] = 'getLatestNews';
@@ -32,15 +29,12 @@ function getLatestNews($name_kat){
     
     $latestNewsPic = getPicture($m_row['cl_from']);
     
-    #$latestNews =  "[[".$m_row['page_title']."|[[Datei:".$latestNewsPic."|200px]]]]";
-    
-    $latestNews =  "[[Image:".$latestNewsPic."|link=".$m_row['page_title']."|200px]]";
+    $latestNews =  "[[Image:".$latestNewsPic."|link=".$m_row['page_title']."|250px]]";
     
     $m_dbObj->freeResult( $m_res );
     
     $latestNews = $wgOut->parse( $latestNews);
 
-    #return $parser->insertStripItem( $latestNews, $parser->mStripState );
     return $latestNews;
     
 }
