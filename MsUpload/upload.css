@@ -1,0 +1,115 @@
+.neu{
+  display:block ;
+  /*border:1px solid red;*/
+}
+.sel{
+  margin:2px 5px 0 5px;
+}
+
+.warning {
+  background-color: #fff6bf;
+  color: #514721;
+  /*display: block;*/
+  font-size: 0.9em;
+  font-size: 85%;
+  padding-left:40px;
+  padding-right:40px;
+}
+
+a.hover {
+	color: red;
+}
+
+#upload_div{
+  padding:5px;
+  width:100%;
+  
+} 
+
+#upload_list {
+	padding: 0;
+	list-style:  none none;
+	margin: 0;
+}
+ 
+
+#upload_list .file {
+	line-height: 2em;
+	background: #F5F5F5 url(./images/document-globe.png) no-repeat 5px 50%;
+	padding: 2px 0px 2px 22px;
+	border: 1px solid #eee;
+}
+
+#upload_list .file-invalid {
+	cursor: pointer;
+	color: #514721;
+  border: 1px solid #eee;
+	padding: 2px 0px 2px 48px;
+	line-height: 2em;
+	background: url(./images/error.png) no-repeat 24px 5px;
+}
+
+#upload_list .file-invalid span {
+	background-color: #fff6bf;
+	padding:1px;
+}
+ 
+
+#upload_list .file-ok {
+	background: #e6efc2 url(./images/tick.png) no-repeat 5px 50%;
+}
+
+#upload_list li:hover
+{ 
+	border: 1px solid #B0C4DE;	
+}
+
+
+#upload_list .file span,
+#upload_list .file a {
+	padding: 0 4px;
+}
+ 
+
+#upload_list .file .file-title {
+  font-weight: bold;
+  margin-left:10px;
+}
+
+#upload_list .file .input_change {
+  margin-left:10px;
+}
+
+#upload_list .file .file-size {
+	color: #666;
+}
+ 
+#upload_list .file .file-error {
+	color: #8a1f11;
+}
+ 
+#upload_list .file .file-cancel {
+	/*background: #e6efc2 url(./upload/assets/cross-circle.png) no-repeat 5px 50%;*/
+	margin-left:5px;
+	margin-right:5px;
+	cursor: hand;
+	/*für ff*/
+	cursor:pointer;
+}
+ 
+#upload_list .file .file-progress {
+	width: 125px;
+	height: 12px;
+	vertical-align: middle;
+	background-image: url(./images/progress-bar/progress.gif);
+}
+
+.check_index{
+  float:right;
+  margin-top:7px;
+}
+
+.check_span{
+  float:right;
+  color:#c0c0c0;
+}

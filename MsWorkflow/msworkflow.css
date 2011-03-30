@@ -1,0 +1,39 @@
+#erstellt, #geprueft,#freigegeben{
+display: none;
+}
+
+
+#show_ampel{
+   margin:50px;
+   text-align:right;
+}
+
+#show_ampel span{
+  
+   width:100px;
+   height:100px;
+   padding:20px 25px;
+   margin:2px;
+}
+
+#show_ampel span:hover {
+   cursor: hand;
+   cursor: pointer;
+}
+
+.ampel_grau{
+   background: url(./images/grau.png) no-repeat 0px 6px;
+}
+
+.ampel_rot{
+   background: url(./images/rot.png) no-repeat 0px 6px;
+}
+
+.ampel_gelb{
+   background: url(./images/gelb.png) no-repeat 0px 6px;
+}
+
+.ampel_gruen{
+  background: url(./images/gruen.png) no-repeat 0px 6px;
+}
+

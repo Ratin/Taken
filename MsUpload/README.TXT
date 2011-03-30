@@ -1,0 +1,9 @@
+
+##Start --------------------------------------- MsUpload
+$wgMSU_PictureExt = array ('jpg','gif','png','JPG');
+$wgMSU_AutoKat = false;    #autokategorisierung
+$wgMSU_AutoIndex = true;  #fileindexer
+require_once("$IP/extensions/MsUpload/msupload.php");
+##End  --------------------------------------- MsUpload
+
+
