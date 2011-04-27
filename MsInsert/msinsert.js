@@ -2,17 +2,20 @@ function vorlage_sel(i){
 
   if(i!=0){
   sajax_do_call( 'wfAjaxVorlage', [vorlagen[i-1]], 
-        	function (result) {
-        	//obj.processResult(result, file.name)
-        	warning = result.responseText;
+        			function (result) {
+        				//obj.processResult(result, file.name)
+        				warning = result.responseText;
         				
-        	if(warning != "") {
-                vorlage_insert(warning,'','');
-                //vorlage_insert(warning,'\n<!--Vorlage Start-->\n','\n<!--Vorlage Ende-->\n');
+        				if(warning != "") {
+                
+                vorlage_insert(warning,'\n<!--Vorlage Start-->\n','\n<!--Vorlage Ende-->\n');
+
                 }
-    
-        	} //function
-        	);
+        			
+                  
+        			}
+        		);
+
   } //if
 }
 
@@ -44,7 +47,7 @@ function vorlage_insert(inhalt,tagOpen,tagClose) {
                 checkSelectedText();
                 range.text = tagOpen + selText + tagClose;
                 //mark sample text as selected
-                range.select();
+                //range.select();   //nicht markieren des eingefügten textes
 
                 //restore window scroll position
                 if (document.documentElement && document.documentElement.scrollTop)
@@ -72,13 +75,19 @@ function vorlage_insert(inhalt,tagOpen,tagClose) {
                         + this.editor.value.substring(endPos, this.editor.value.length);
                 
                 //set new selection
+                
                 if (isSample) {
-                        this.editor.selectionStart = startPos + tagOpen.length;
+                        //this.editor.selectionStart = startPos + tagOpen.length;
+                        //this.editor.selectionEnd = startPos + tagOpen.length + selText.length;
+                        this.editor.selectionStart = startPos + tagOpen.length + selText.length;
                         this.editor.selectionEnd = startPos + tagOpen.length + selText.length;
                 } else {
-                        this.editor.selectionStart = startPos + tagOpen.length + selText.length + tagClose.length;
+                        //this.editor.selectionStart = startPos + tagOpen.length + selText.length + tagClose.length;
+                        //this.editor.selectionEnd = this.editor.selectionStart;
+                        this.editor.selectionStart = this.editor.selectionStart;
                         this.editor.selectionEnd = this.editor.selectionStart;
                 }
+               
                 //restore textarea scroll position
                 this.editor.scrollTop = textScroll;
         } 
@@ -95,21 +104,25 @@ function vorlage_insert(inhalt,tagOpen,tagClose) {
                 }
         }
         
+        
 }
+
+
 
 function create_btn_insert() {
     
-     // Select erstellen       
+
+    	// Select erstellen       
      var objSel = document.createElement("select");
      objSel.onchange= function(){
         
         var sel = this.options[this.selectedIndex].value;
         vorlage_sel(sel);
-   
+        
         
         };
           
-          objSel.options[objSel.options.length] = new Option('Vorlage auswählen', 0);
+           objSel.options[objSel.options.length] = new Option('Vorlage auswählen', 0);
            
           for (var i = 0; i < vorlagen.length; ++i){
           
@@ -119,5 +132,8 @@ function create_btn_insert() {
           
       
     document.getElementById('toolbar').appendChild(objSel);
+    
 	
 }
+
+
