@@ -216,12 +216,12 @@ if (isset($_FILES['Filedata']['name'])) {
 
 
 
-$path_parts = pathinfo($file->getName());
-$extension = $path_parts['extension'];
+#$path_parts = pathinfo($file->getName());
+#$extension = $path_parts['extension'];
 
-if (in_array($extension, $wgPictureExt)){
-$extension = "pic";
-} 	
+#if (in_array($extension, $wgPictureExt)){
+#$extension = "pic";
+#} 	
   
   
           
@@ -240,7 +240,7 @@ if ($error) {
 
 	$return = array(
 		'status' => '1',
-		'extension'=> "|".$extension."|",
+		//'extension'=> "|".$extension."|",
 		'name' => $file->getName(),
 		'fi' => $sCreateIndexFilepath
 	);

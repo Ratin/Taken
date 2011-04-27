@@ -33,12 +33,18 @@ a.hover {
 }
  
 
-#upload_list .file {
+#upload_list .file{
 	line-height: 2em;
 	background: #F5F5F5 url(./images/document-globe.png) no-repeat 5px 50%;
 	padding: 2px 0px 2px 22px;
 	border: 1px solid #eee;
 }
+
+#upload_list .picture {
+  background: #F5F5F5 url(./images/document-image.png) no-repeat 5px 50%;
+}
+
+
 
 #upload_list .file-invalid {
 	cursor: pointer;
@@ -112,4 +118,8 @@ a.hover {
 .check_span{
   float:right;
   color:#c0c0c0;
+}
+
+#upload_gallery{
+  color: #ffffff;
 }

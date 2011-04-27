@@ -188,14 +188,18 @@ FancyUpload3.Attach.File = new Class({
 		} else {
       
      
+     
+      //alert(this.extension_check);
 			//new Element('span', {text:this.response.text}).inject($('file-' + this.id), 'bottom');
       //alert(this.response.text);
-      
+      //alert(this.base.options.pictureExtensions); so könnten variablen übergeben werden
       //---------------------------------
-      file = this.response.text.split('|');
-      if(!file[1]){
-      new Element('span', {text:this.response.text}).inject($('file-' + this.id), 'bottom');
-      } 
+      
+      
+      //file = this.response.text.split('|');
+      //if(!file[1]){
+      //new Element('span', {text:this.response.text}).inject($('file-' + this.id), 'bottom');
+      //} 
 
         bar = $('bar-' + this.id);
         bar.set('styles', {'display': 'none'});
@@ -214,16 +218,46 @@ FancyUpload3.Attach.File = new Class({
                 // insert link
         		    }.bind(this));
         		  
-              if (file[1] == "pic"){
+
+              if (this.extension_check == "pic"){
         		  
+        		    gallery =  $('upload_gallery');
+        		    gallery.value += this.ui.title.innerHTML+'|';
+        		    
+        		    
+        		     if(!$('gallery_link')){
+          		  
+              		  gallery_imgs = gallery.value.split('|');
+              		  
+              		  if(gallery_imgs.length > 2 ){
+              		
+                      gallery_link = new Element('a', {id: 'gallery_link',text: 'Bilder als Gallery einfügen'}).inject(gallery, 'after');
+                      gallery_link.addEvent('click', function() {  
+
+
+                        gallery_text = "";
+                          for(i=0;i<gallery_imgs.length-1;i++){
+                          gallery_text +=  "Image:"+gallery_imgs[i]+"\n";
+                          }
+                        
+                        vorlage_insert(gallery_text,'<gallery>\n\n','\n</gallery>\n');
+
+                      }.bind(this));
+                      
+                      
+                      new Element('span', {text:' | '}).inject(gallery, 'after');
+                    }
+              		  //gallery.innerHTML = '';
+            		  }
+        		    
         		    new Element('span', {text:' | '}).inject(li, 'bottom');
                 insert_bild_a = new Element('a', {id:'insert_bild_'+ this.id,text:unescape('als Bild einf\u00Fcgen'),href: '#'}).inject(li, 'bottom');
                 insert_bild_a.addEvent('click', function() {  
-                  vorlage_insert('[[Image:'+this.ui.title.innerHTML+']]','','');
+                  vorlage_insert('[[Image:'+this.ui.title.innerHTML+'|400px]]','','');
                   // insert link
                 }.bind(this));
                 
-        		  } else if (file[1] == "mov") { //pic  
+        		  } else if (this.extension_check == "mov") { //pic  
         		  
         		    new Element('span', {text:' | '}).inject(li, 'bottom');
         		    insert_mov_a = new Element('a', {id:'insert_mov_'+ this.id,text:unescape('als Movie einf\u00Fcgen'),href: '#'}).inject(li, 'bottom');

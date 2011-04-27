@@ -23,7 +23,7 @@ function wfMsUploadRender() {
       $output .= "<form action='' method='post' id='upload-form'>";
       $output .= "<ul id='upload_list'></ul>";
       $output .= "<hr noshade>";
-      $output .= "</form><a href='#'' id='upload_all'></a>";
+      $output .= "</form><a href='#' id='upload_all'></a>";
       
     }  
    
@@ -33,12 +33,17 @@ function wfMsUploadRender() {
 
 $wgAjaxExportList[] = 'wfMsUploadCheck';
 function wfMsUploadCheck($extension){
-  global $wgFileExtensions;
+  global $wgFileExtensions,$wgMSU_PictureExt;
   
   if (!in_array($extension, $wgFileExtensions)){
-      return implode(',', $wgFileExtensions);
+      return implode(',', $wgFileExtensions);  
   }
-  return "1";
+
+  if (in_array($extension, $wgMSU_PictureExt)){
+  return "pic";
+  } 	
+
+  return '1';
 }
 
 $wgAjaxExportList[] = 'wfMsUploadDoAjax';

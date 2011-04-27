@@ -14,19 +14,24 @@ function loadMsUpload(){
   autoIndex = info[3];
   
   var categories = new Array();
+  //var anzPictures = 0 ;  
   
-  
+  new Element('input', {type:'hidden',value:wgPageName, name: 'kat_hidden'}).inject($('upload-form'), 'bottom');  
+  new Element('input', {type:'hidden',id: 'upload_gallery',value:''}).inject($('upload_all'), 'after');  
+
+              
+              
+              
   function ajax_check(file,check,firsttime,ausgabe){
         
-        
-        //if(!ausgabe){ //wenn funktion über change aufgerufen wird
-        //ausgabe = $('warning-' + file.id);  
-        //}
         ausgabe.innerHTML = "<img src='extensions/MsUpload/images/anim.gif'>";
 
         sajax_do_call( 'wfMsUploadCheck', [file.extension],
         function (response) {
-        if (response.responseText == 1){
+
+        file.extension_check = response.responseText;
+        if (file.extension_check == 1 || file.extension_check =='pic'){
+
           sajax_do_call( 'SpecialUpload::ajaxGetExistsWarning', [check], 
         			function (result) {
         				warning = result.responseText;
@@ -65,9 +70,8 @@ function loadMsUpload(){
         				
         			});
         			
-        			if(firsttime!=false){ //nur beim ersten mal
+        			if(firsttime==true){ //nur beim ersten mal
               build(file); // alles aufbauen
-              new Element('input', {type:'hidden',value:wgPageName, name: 'kat_hidden'}).inject($('upload-form'), 'bottom');
               }
         			
         			
@@ -92,12 +96,17 @@ function loadMsUpload(){
   
   function build(file){
    
+     //Datei ist ein Bild
+     if(file.extension_check == 'pic'){
+        //anzPictures++;
+        file.ui.element.addClass('picture'); //set('class', 'picture');
+     } 
+     
       //fileindexer
       if(autoIndex){
         new Element('input', {name:'fi['+file.id+']', 'class':'check_index',type: 'checkbox', 'checked': true}).inject(file.ui.title, 'after');
     	  new Element('span', {'class':'check_span',html: 'Index erstellen'}).inject(file.ui.title, 'after');
       }
-      
       //autokat
       if(autoKat){
         if(wgNamespaceNumber==14){
@@ -200,6 +209,7 @@ function loadMsUpload(){
 		path: 'extensions/MsUpload/source/Swiff.Uploader.swf',
     url: 'extensions/MsUpload/msupload_api.php?user='+userName,
 		fileSizeMax: 100 * 1024 * 1024, //100MB
+		//pictureExtensions: 'jpg', //so könnten variablen übergeben werden
     //allowDuplicates: true;        
 		verbose: true,
 
@@ -256,6 +266,9 @@ function loadMsUpload(){
     },
 
     onFileStart: function(file) {
+    
+        //$('upload_gallery').innerHTML = anzPictures;
+   
          //damit der upload fortschritt angezeigt wird
          bar = $('bar-' + file.id);
          bar.set('styles', {'display': 'inline'});
@@ -318,6 +331,15 @@ function loadMsUpload(){
 		
 
 		},
+ 
+    onFileRemove:function(file){
+      //Datei ist ein Bild
+      //if(file.extension_check == 'pic'){
+      //  anzPictures--;
+      //} 
+
+    },
+ 
  
 		onFileError: function(file) {
 			file.ui.cancel.set('html', 'Retry').removeEvents().addEvent('click', function() {
