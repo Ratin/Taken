@@ -159,7 +159,8 @@ FancyUpload3.Attach.File = new Class({
 	},
 
 	onRemove: function() {
-		this.ui = this.ui.element.destroy();
+		//this.ui = this.ui.element.destroy();
+		this.ui = this.ui.element.fade('out').retrieve('tween').chain(Element.destroy.bind(Element, this.ui.element)); //loeschen
 	},
 
 	onProgress: function() {
@@ -224,31 +225,39 @@ FancyUpload3.Attach.File = new Class({
         		    gallery =  $('upload_gallery');
         		    gallery.value += this.ui.title.innerHTML+'|';
         		    
+        		    gallery_imgs = gallery.value.split('|');
         		    
-        		     if(!$('gallery_link')){
-          		  
-              		  gallery_imgs = gallery.value.split('|');
+
+        		     if(gallery_imgs.length > 2 ){
+        		     
+                   if(!$('gallery_link')){  //link schon gesetzt ?
+                    
+            		      gallery_link = new Element('a', {id: 'gallery_link',text: 'Bilder als Gallery einfügen'}).inject(gallery, 'after');
+            		      new Element('span', {text:' | '}).inject(gallery, 'after');
+            		    
+            		    
+            		   } else {
+                    gallery_link = $('gallery_link');
+                   }
+                 
+                 
+                      gallery_text = "";
+                      for(i=0;i<gallery_imgs.length-1;i++){
+                      gallery_text +=  "Image:"+gallery_imgs[i]+"\n";
+                      }
               		  
-              		  if(gallery_imgs.length > 2 ){
-              		
-                      gallery_link = new Element('a', {id: 'gallery_link',text: 'Bilder als Gallery einfügen'}).inject(gallery, 'after');
-                      gallery_link.addEvent('click', function() {  
-
-
-                        gallery_text = "";
-                          for(i=0;i<gallery_imgs.length-1;i++){
-                          gallery_text +=  "Image:"+gallery_imgs[i]+"\n";
-                          }
-                        
-                        vorlage_insert(gallery_text,'<gallery>\n\n','\n</gallery>\n');
-
-                      }.bind(this));
+                      gallery_link.removeEvents('click'); //damit die alten events entfernt werden
+                      gallery_link.addEvent('click', function() { 
                       
+                      vorlage_insert(gallery_text,'<gallery>\n\n','\n</gallery>\n'); 
+
                       
-                      new Element('span', {text:' | '}).inject(gallery, 'after');
-                    }
-              		  //gallery.innerHTML = '';
-            		  }
+                      });
+
+                      
+                } //if
+
+            		  
         		    
         		    new Element('span', {text:' | '}).inject(li, 'bottom');
                 insert_bild_a = new Element('a', {id:'insert_bild_'+ this.id,text:unescape('als Bild einf\u00Fcgen'),href: '#'}).inject(li, 'bottom');

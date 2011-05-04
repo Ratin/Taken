@@ -10,7 +10,7 @@ $wgExtensionCredits['parserhook'][] = array(
 	'name' => 'taken-MsUpload',
 	'url'  => 'http://www.ta-ken.de/extensions',
 	'description' => 'Diese Extension macht Uploads/Multiuploads direkt im Editor möglich',
-	'version' => '7.4',
+	'version' => '7.6',
 	'author' => '[mailto:info@ta-ken.de info@ta-ken.de] | ta-ken'
 );
 

@@ -74,7 +74,10 @@ function loadMsUpload(){
               build(file); // alles aufbauen
               }
         			
-        			
+        	 } else if (file.extension_check == "") { //überprüfung hat zu lange gedauert
+           
+               ajax_check(file,check,firsttime,ausgabe);
+           	
         	 } else {
 
             new Element('li', {
@@ -82,6 +85,7 @@ function loadMsUpload(){
 				    'class': 'file-invalid',
 				    events: {
 						click: function() {
+						
 							this.destroy();
 						}}
 			      }).adopt(
