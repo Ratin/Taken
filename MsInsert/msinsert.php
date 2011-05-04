@@ -8,7 +8,7 @@ $wgExtensionCredits['parserhook'][] = array(
 	'name' => 'taken-MsInsert',
 	'url'  => 'http://www.ta-ken.de/extensions',
 	'description' => 'Per Dropdown koennen bestimmte Seiten als Vorlage in den Editor geladen werden.',
-	'version' => '1.8',
+	'version' => '1.9',
 	'author' => '[mailto:info@ta-ken.de info@ta-ken.de] | ta-ken'
 );
 
