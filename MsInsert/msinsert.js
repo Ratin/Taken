@@ -8,7 +8,8 @@ function vorlage_sel(i){
         				
         				if(warning != "") {
                 
-                vorlage_insert(warning,'\n<!--Vorlage Start-->\n','\n<!--Vorlage Ende-->\n');
+                vorlage_insert(warning,'\n','\n');
+                //vorlage_insert(warning,'\n<!--Vorlage Start-->\n','\n<!--Vorlage Ende-->\n');
 
                 }
         			
