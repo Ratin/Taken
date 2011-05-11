@@ -13,37 +13,38 @@ window.addEvent('domready', function() {
   
   //datenbank erstellen
   //sajax_do_call( 'wfMsLinksDB',[],function (result2) { alert(result2.responseText); });
-  color_list = new Array('#CCF2FF','#D9FFCC','#FFF2CC','#FFD9CC');
+  //datenbank erstellen ende
+  
+  color_list = new Array('#00cc00','#fffc00','#ff0000');
 
 
-  l=0 
-  $$('.status_file').each(function(el){
+  $$('.status_file').each(function(el,anz){
   
       file_name = el.innerHTML;    
       el.empty();
       
-      
+
+       
       sajax_do_call( 'databaseRead',[file_name],function (result) { 
       
       info = result.responseText.split("|");
+      //alert(this.file_name);
 
-
-      for(i=1;i<5;i++){
+      for(i=1;i<4;i++){
           
-          radio = new Element('input', {name: 'file_'+l,'class':i,type: 'radio'}).inject(el, 'before');
+          radio = new Element('input', {name: info[0],'class':i,type: 'radio'}).inject(el, 'before');
           radio.setStyle('background-color', color_list[i-1]);
-          
-          
-          if(info[0]==i){
+                   
+          if(info[1]==i){
           radio.checked = true;
           }
 
               radio.addEvent('change', function() {
                 
-                sajax_do_call( 'databaseSave', [this.className,file_name], 
+                sajax_do_call( 'databaseSave', [this.className,this.name], 
                 function (result) {
                   
-                  alert("Neuer Status "+result.responseText+" wurde gespeichert");
+                  alert("Neuer Status \""+result.responseText+"\" wurde gespeichert");
                    
 
                  
@@ -53,12 +54,9 @@ window.addEvent('domready', function() {
               }.bind(radio));
           
           } //for
-      
-      
-      
+
+        
       });
- 
-   l++;       
   
   });
      

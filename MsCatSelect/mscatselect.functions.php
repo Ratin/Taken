@@ -18,8 +18,6 @@ if( !defined( 'MEDIAWIKI' ) ) {
 ## Entry point for the hook and main worker function for editing the page:
 function fnSelectCategoryShowHook( $m_isUpload = false, $m_pageObj ) {
 	  
-  # check if we should do anything or sleep
-  if ( fnSelectCategoryCheckConditions( $m_isUpload, $m_pageObj ) ) {
     # Register CSS file for our select box:
     global $wgOut, $wgScriptPath,$wgWarnNoCat;
     global $wgTitle;
@@ -99,8 +97,12 @@ function fnSelectCategoryShowHook( $m_isUpload = false, $m_pageObj ) {
             array_push($unter_cat,$m_string);
          }
 
+    if (!$wgFrameworkLoaded){
+    $wgOut->addScriptFile( $wgScriptPath.'/extensions/MsCatSelect/mootools-core-1.3.js' );
+    $wgFrameworkLoaded = true;  
+    }
 
-    $wgOut->addScript("<script type=\"text/javascript\" src=\"$wgScriptPath/extensions/MsCatSelect/mscatselect.js\"></script>\n");
+    $wgOut->addScriptFile( $wgScriptPath.'/extensions/MsCatSelect/mscatselect.js' );
     $m_pageObj->$m_place .= "<select id='dd_1' name='auswahl' onchange=\"getUnterkat(this.value,1)\"><option value=''>----</option>";
 
      $i=0;
@@ -147,7 +149,6 @@ function fnSelectCategoryShowHook( $m_isUpload = false, $m_pageObj ) {
     $m_pageObj->$m_place .= "</div>";
     $m_pageObj->$m_place .= "</div><!-- mscs end -->\n";
 
-  }
   # Return true to let the rest work:
   return true;
 }
@@ -155,9 +156,6 @@ function fnSelectCategoryShowHook( $m_isUpload = false, $m_pageObj ) {
 function fnSelectCategorySaveHook( $m_isUpload, $m_pageObj ) {
   global $wgContLang;
   global $wgTitle;
-
-  # check if we should do anything or sleep
-  if ( fnSelectCategoryCheckConditions( $m_isUpload, $m_pageObj ) ) {
 
     # Get localised namespace string:
     $m_catString = $wgContLang->getNsText( NS_CATEGORY );
@@ -183,7 +181,6 @@ function fnSelectCategorySaveHook( $m_isUpload, $m_pageObj ) {
     } else{
       $m_pageObj->textbox1 .= $m_text;
     }
-  }
 
   # Return to the let MediaWiki do the rest of the work:
   return true;
@@ -357,39 +354,6 @@ function fnGetPageCategories() {
 
   # Return the list of categories as an array:
   return $m_catLinks;
-}
-
-# Function that checks if we meet the run conditions of the extension
-function fnSelectCategoryCheckConditions ($m_isUpload, $m_pageObj ) {
-  global $wgSelectCategoryNamespaces;
-  global $wgSelectCategoryEnableSubpages;
-  global $wgTitle;
-
-  # Run only if we are in an upload, an activated namespace or if page is
-  # a subpage and subpages are enabled (unfortunately we can't use
-  # implication in PHP) but not if we do a sectionedit:
-  if ($m_isUpload == true) {
-    return true;
-  }
-
-  $ns = $wgTitle->getNamespace();
-  if (array_key_exists ($ns, $wgSelectCategoryNamespaces)) {
-    $enabledForNamespace = $wgSelectCategoryNamespaces[$ns];
-  } else {
-    $enabledForNamespace = false;
-  }
-
-  # Check if page is subpage once to save method calls below:
-  $m_isSubpage = $wgTitle->isSubpage();
-
-
-  if ($enabledForNamespace
-    && (!$m_isSubpage
-      || $m_isSubpage && $wgSelectCategoryEnableSubpage)
-    && $m_pageObj->section == false) {
-    return true;
-  }
-  return true;
 }
 
 

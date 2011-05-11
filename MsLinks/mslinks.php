@@ -14,10 +14,10 @@ if(! defined('MEDIAWIKI')) {
 
 $wgExtensionCredits['parserhook'][] = array(
 	'name' => 'MsLinks',
-	'url'  => 'http://www.ta-ken.de/extensions',
+	'url'  => 'http://www.ratin.de',
 	'description' => 'Erzeugt einem Link mit dem passenden Icon sowie einen Direkt- und Versionslink',
-	'version' => '2.2',
-	'author' => '[mailto:info@ta-ken.de info@ta-ken.de] | ta-ken'
+	'version' => '2.3',
+	'author' => '[mailto:info@ratin.de info@ratin.de] | Ratin'
 );
  
 

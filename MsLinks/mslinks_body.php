@@ -119,7 +119,7 @@ function databaseSave($status,$datei){
    $m_dbObj =& wfGetDB( DB_SLAVE );
    $m_tblCatLink = $m_dbObj->tableName( 'msstatus' );
    
-      if(databaseRead($datei)==""){ #nicht vorhanden
+      if(databaseRead($datei)==$datei){ #nicht vorhanden
 
        $m_sql = "INSERT INTO $m_tblCatLink (ID, datei, status, user, timestamp) VALUES ('','".$datei."','".$status."','".$wgUser->getName()."','".wfTimestamp()."')";
        $m_res = $m_dbObj->query( $m_sql, __METHOD__ ); 
@@ -139,6 +139,7 @@ function databaseSave($status,$datei){
 $wgAjaxExportList[] = 'databaseRead';
 function databaseRead($datei){
 
+    
     $m_dbObj =& wfGetDB( DB_SLAVE );
     $m_tblCatLink = $m_dbObj->tableName( 'msstatus' );
     $m_sql = "SELECT datei, status, user, timestamp FROM $m_tblCatLink WHERE datei = '".$datei."'";
@@ -151,10 +152,10 @@ function databaseRead($datei){
         $datum = date("d. M. Y",$m_row['timestamp']); //Formatiert den Timestamp um in Tag.Monat.Jahr
         $uhrzeit = date("H:i",$m_row['timestamp']); // H:i ist das K?rzel f?r Stunde : Minute
         
-        $output = $m_row['status']."|".$m_row['user']."|".$uhrzeit.", ".$datum;
+        $output = $datei."|".$m_row['status']."|".$m_row['user']."|".$uhrzeit.", ".$datum;
     
     
-    } else { return ""; }//if 
+    } else { return $datei; }//if 
 
     $m_dbObj->freeResult( $m_res );   
      
