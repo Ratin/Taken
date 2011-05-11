@@ -32,8 +32,9 @@ function fnSelectCategoryShowHook( $m_isUpload = false, $m_pageObj ) {
       margin: 5px 0px;
     }
     #WarnNoCat{
-      padding: .5em;
+      padding: .5em 0em;
       color: red;
+      font-size:1.35em;
     }
     
     </style>'); 
@@ -116,7 +117,7 @@ function fnSelectCategoryShowHook( $m_isUpload = false, $m_pageObj ) {
     $m_pageObj->$m_place .= "&nbsp;<input type='button' value='". wfMsg( 'selectcategory-add' ) ."' onclick=\"addKat(1)\">";
     $m_pageObj->$m_place .= "<br><b>". wfMsg( 'selectcategory-untercat' ) .": </b><input type='text' value='' size='10' id='new_name'>";
     $m_pageObj->$m_place .= "&nbsp;<input type='button' value='". wfMsg( 'selectcategory-go' ) ."' onclick=\"neu()\">";
-    $m_pageObj->$m_place .= "<br>(". wfMsg( 'selectcategory-untercat-hinw' ) .")<br><br>";
+    $m_pageObj->$m_place .= " (". wfMsg( 'selectcategory-untercat-hinw' ) .")<br>";
     
     
     #all added categories

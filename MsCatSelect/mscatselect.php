@@ -15,7 +15,7 @@ $wgExtensionCredits['parserhook'][] = array(
         'url'  => 'http://www.ratin.de',
         'version'        => '4.0',
         'author' => '[mailto:info@ratin.de info@ratin.de] | Ratin',
-        'description' => 'Mit dieser Extension kann eine Seite sehr einfach einer bestehenden oder neuen Kategorie zugewiesen werden',
+        'description' => 'Mit dieser Extension kann eine Seite einer bestehenden oder neuen Kategorie per DropDown zugewiesen werden oder auch neue Unterkategorien erstellt werden.',
         'descriptionmsg' => 'selectcategory-desc',
 );
 
