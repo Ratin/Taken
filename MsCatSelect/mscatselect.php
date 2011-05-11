@@ -11,10 +11,10 @@ if( !defined( 'MEDIAWIKI' ) ) {
 
 ## Register extension setup hook and credits:
 $wgExtensionCredits['parserhook'][] = array(
-        'name'           => 'taken-MsCatSelect',
-        'url'  => 'http://www.ta-ken.de/extensions',
-        'version'        => '3.9.2',
-        'author' => '[mailto:info@ta-ken.de info@ta-ken.de] | ta-ken',
+        'name'           => 'MsCatSelect',
+        'url'  => 'http://www.ratin.de',
+        'version'        => '4.0',
+        'author' => '[mailto:info@ratin.de info@ratin.de] | Ratin',
         'description' => 'Mit dieser Extension kann eine Seite sehr einfach einer bestehenden oder neuen Kategorie zugewiesen werden',
         'descriptionmsg' => 'selectcategory-desc',
 );
@@ -66,8 +66,8 @@ if( !isset( $wgSelectCategoryRoot ) ) $wgSelectCategoryRoot = array(
 # $wgSelectCategoryEnableSubpages - if the extension should be active on subpages or not (true, as subpages are disabled by default)
 if( !isset( $wgSelectCategoryEnableSubpages ) ) $wgSelectCategoryEnableSubpages = true;
 
-$dir = dirname(__FILE__) . '/';
-$wgExtensionMessagesFiles['mscatselect'] = $dir . 'mscatselect.i18n.php';
+#$dir = dirname(__FILE__) . '/';
+#$wgExtensionMessagesFiles['mscatselect'] = $dir . 'mscatselect.i18n.php';
 
 ## Set Hook:
 global $wgHooks, $wgScriptPath;

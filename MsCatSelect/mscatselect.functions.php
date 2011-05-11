@@ -32,7 +32,6 @@ function fnSelectCategoryShowHook( $m_isUpload = false, $m_pageObj ) {
 	
     # Get all categories from wiki:
     $m_allCats = fnSelectCategoryGetAllCategories(true);
-    
    
     #-----------------------ms
     global $wgHauptkategorien,$m_allCats_os;
@@ -56,7 +55,6 @@ function fnSelectCategoryShowHook( $m_isUpload = false, $m_pageObj ) {
     # Load system messages:
     wfLoadExtensionMessages( 'mscatselect' );
     # Get the right member variables, depending on if we're on an upload form or not:
-    
     
     if( !$m_isUpload ) {
       # Extract all categorylinks from editfield:
@@ -117,7 +115,7 @@ function fnSelectCategoryShowHook( $m_isUpload = false, $m_pageObj ) {
     $m_pageObj->$m_place .= "<br><b>Neue Unterkategorie: </b><input type='text' value='' size='10' id='new_name'>";
     $m_pageObj->$m_place .= "&nbsp;<input type='button' value='erstellen' onclick=\"neu()\">";
     $m_pageObj->$m_place .= "<br>(wird in vorrausgew&auml;hlter Oberkategorie erstellt)<br><br>";
-    $m_pageObj->$m_place .= "<b>Bereits vergebene Kategorien:</b><br><div id='msc_added'>";
+    
     
     # für die schon hinzugefügten Kategorien
     #Array $m_pageCats enthaelt alle kategorien der Seite
@@ -130,6 +128,8 @@ function fnSelectCategoryShowHook( $m_isUpload = false, $m_pageObj ) {
       $m_pageObj->$m_place .= "<div id='WarnNoCat'>VORSICHT: Diese Seite enth&auml;lt noch keine Kategorie. Bitte f&uuml;gen Sie zuerst eine Kategorie hinzu!</div>";
     
     } else { #groesser 0
+    
+      $m_pageObj->$m_place .= "<b>Bereits vergebene Kategorien:</b><br><div id='msc_added'>";
     
       foreach($m_pageCats as $m_cat =>$m_depth ){
     
@@ -194,6 +194,7 @@ function fnSelectCategorySaveHook( $m_isUpload, $m_pageObj ) {
 ##   'Name' => (int) Depth,
 ##   ...
 ## )
+
 $wgAjaxExportList[] = 'fnSelectCategoryGetAllCategories';
 function fnSelectCategoryGetAllCategories($m_sub_cats) {
   global $wgTitle;
@@ -290,7 +291,6 @@ function fnSelectCategoryGetChildren( $m_root, $m_depth = 1 ) {
     # Add current entry to array:
     $m_allCats += array($m_row['title'] => $m_depth);
     
-   
     #damit es nicht automatisch eine ebene tiefer geht - ms
     #$m_allCats += fnSelectCategoryGetChildren( $m_row['title'], $m_depth + 1 );
   }
@@ -372,13 +372,9 @@ function fnSelectCategoryCheckConditions ($m_isUpload, $m_pageObj ) {
   global $wgSelectCategoryEnableSubpages;
   global $wgTitle;
 
-
-
   # Run only if we are in an upload, an activated namespace or if page is
   # a subpage and subpages are enabled (unfortunately we can't use
   # implication in PHP) but not if we do a sectionedit:
-
-
   if ($m_isUpload == true) {
     return true;
   }
@@ -391,7 +387,6 @@ function fnSelectCategoryCheckConditions ($m_isUpload, $m_pageObj ) {
   } else {
     $enabledForNamespace = false;
   }
-
 
   # Check if page is subpage once to save method calls below:
   $m_isSubpage = $wgTitle->isSubpage();
@@ -407,102 +402,20 @@ function fnSelectCategoryCheckConditions ($m_isUpload, $m_pageObj ) {
 }
 
 
-
-function fnNewCategory2($title_org,$text_new,$category) { 
-
-$title = Title::newFromText( $title_org );
-
-    if(isset($title) && $title->getArticleID() == 0) {
-
-         erstellen($title_org,$text_new,$category); //Artikel erstellen
-
-    } elseif (!isset($title)) { //moep
-          $wgOut->errorpage( 'badtitle', 'badtitletext');
-    } else { //article already existing 
-
-         erstellen($title_org,$text_new,$category); //Artikel aendern
-
-    }
-
-
-
-  return $title;
-}
-
-function fnNewCategory3($title_org,$text_new,$category) {
-global $wgUser;
-
-
-$title =Title::newFromText($title_org);
-$crEditArticle = new Article($title,0);
-
-
-$wpStarttime = wfTimestampNow();
-$wpEdittime = $crEditArticle->getTimestamp();
-$wpTextbox1 = $text_new; 
-$wpSave = 1;
-$wpMinoredit = "";
-$wpEditToken = htmlspecialchars($wgUser->editToken());
-
-
- $crRequestParams = array(
- 'title' => $title_org,
- 'wpStarttime'=>$wpStarttime,
- 'wpEdittime'=>$wpEdittime,
- 'wpTextbox1'=>$wpTextbox1,
- 'SelectCategoryList'=> 'Webdesign', 
-//'SelectCategoryList[]'=> '[Webdesign]', 
-//'SelectCategoryList[]'=> '2', 
-//'wpSelectCategoryList[]'=> 2, 
- 'wpSave'=>$wpSave,
-//'wpMinoredit'=>$wpMinoredit,
- 'wpEditToken'=>$wpEditToken
- );
-
-$crRequest = new FauxRequest($crRequestParams, true);
-
-
-$crEdit=new EditPage($crEditArticle);
-
-
-$crEdit->mArticle = $crEditArticle;
-$crEdit->mTitle = $title;
-
-//$text = $crEdit->getContent();
-
-$crEdit->importFormData($crRequest);
-
-//if(checkUserPermissions($crEdit)){ 
-$crEdit->attemptSave();
-//}
-
-
-return $title_org;
-}
-
-
 $wgAjaxExportList[] = 'fnNewCategory';
 function fnNewCategory($title,$category) {
 
-//global $wgTitle,$wgRequest,$mContent,$wgArticleId,$wgRawHtml,$wgParser,$wgPageName;
-
-$title = Title::newFromText( $title );
-
-//$title = $wgPageName.$title;
-if ($title->getArticleID()){ //artikel schon vorhanden
-	
-return "no".$wgPageName.$title->getArticleID();
-
-} else {
-//return "no".$wgPageName.$title->getArticleID();	
-
-}
-
-#if ($category !=0){
-#$category = "[[Kategorie:".$category."]]";
-#}
-
-	
+  $title = Title::newFromText( $title );
+  
+  //$title = $wgPageName.$title;
+  if ($title->getArticleID()){ //artikel schon vorhanden
+  	
+  return "no".$wgPageName.$title->getArticleID();
+  
+  }
+  #if ($category !=0){
+  #$category = "[[Kategorie:".$category."]]";
+  #}	
 	$text = $category;
 	$summary = "MsCatSelect";
  
