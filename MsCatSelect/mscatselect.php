@@ -66,8 +66,8 @@ if( !isset( $wgSelectCategoryRoot ) ) $wgSelectCategoryRoot = array(
 # $wgSelectCategoryEnableSubpages - if the extension should be active on subpages or not (true, as subpages are disabled by default)
 if( !isset( $wgSelectCategoryEnableSubpages ) ) $wgSelectCategoryEnableSubpages = true;
 
-#$dir = dirname(__FILE__) . '/';
-#$wgExtensionMessagesFiles['mscatselect'] = $dir . 'mscatselect.i18n.php';
+$dir = dirname(__FILE__) . '/';
+$wgExtensionMessagesFiles['mscatselect'] = $dir . 'mscatselect.i18n.php';
 
 ## Set Hook:
 global $wgHooks, $wgScriptPath;
@@ -76,13 +76,6 @@ global $wgHooks, $wgScriptPath;
 # Hook when starting editing:
 $wgHooks['EditPage::showEditForm:initial'][] = array( 'fnSelectCategoryShowHook', false );
 
-# Hook for the upload page:
-#$wgHooks['UploadForm:initial'][] = array( 'fnSelectCategoryShowHook', true );
-
 ## Saving the data
 # Hook when saving page:
 $wgHooks['EditPage::attemptSave'][] = array( 'fnSelectCategorySaveHook', false );
-# Hook when saving the upload:
-#$wgHooks['UploadForm:BeforeProcessing'][] = array( 'fnSelectCategorySaveHook', true );
-
-

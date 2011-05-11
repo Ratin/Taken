@@ -1,11 +1,20 @@
 <?php
 
+/**
+ * Functions file for extension MsCatSelect.
+ *  
+ * @author Martin Schwindl  <martin.schwindl@ratin.de> 
+ * @copyright © 2011 by Martin Schwindl
+ *
+ * @licence GNU General Public Licence 2.0 or later
+ */
+
 if( !defined( 'MEDIAWIKI' ) ) {
   echo( "This file is an extension to the MediaWiki software and cannot be used standalone.\n" );
   die();
 }
-
-
+ 
+ 
 ## Entry point for the hook and main worker function for editing the page:
 function fnSelectCategoryShowHook( $m_isUpload = false, $m_pageObj ) {
 	  
@@ -33,25 +42,19 @@ function fnSelectCategoryShowHook( $m_isUpload = false, $m_pageObj ) {
     # Get all categories from wiki:
     $m_allCats = fnSelectCategoryGetAllCategories(true);
    
-    #-----------------------ms
-    global $wgHauptkategorien,$m_allCats_os;
-    if($wgHauptkategorien){
+    global $wgMainCategories,$m_allCats_os;
+    if($wgMainCategories){
     
-      foreach ($wgHauptkategorien as $key => $value) {
+      foreach ($wgMainCategories as $key => $value) {
       $m_allCats_os[$value]=0;
       }
-      
-      //$m_allCats_os = $wgHauptkategorien;
  
     } else {
       
       # Get all categories from wiki:
       $m_allCats_os = fnSelectCategoryGetAllCategories(false);
     }
-    
-    #print_r($m_allCats_os);
-    #-----------------------ms
-    
+
     # Load system messages:
     wfLoadExtensionMessages( 'mscatselect' );
     # Get the right member variables, depending on if we're on an upload form or not:
@@ -65,7 +68,7 @@ function fnSelectCategoryShowHook( $m_isUpload = false, $m_pageObj ) {
       # Never ever use editFormTextTop here as it resides outside the <form> so we will never get contents
       $m_place = 'editFormTextAfterWarn';
       # Print the localised title for the select box:
-      $m_textBefore = '<b>'. wfMsg( 'selectcategory-title' ) . '</b>:';
+      $m_textBefore = '<b>'. wfMsg( 'selectcategory-title' ) . ': </b>';
     
     } else {  # upload
       # No need to get categories:
@@ -75,7 +78,6 @@ function fnSelectCategoryShowHook( $m_isUpload = false, $m_pageObj ) {
       # Print the part of the table including the localised title for the select box:
       $m_textBefore = "\n</td></tr><tr><td align='right'><label for='wpSelectCategory'>" . wfMsg( 'selectcategory-title' ) .":</label></td><td align='left'>";
     }
-
 
     $m_pageObj->$m_place .= "<div class='mscs'><!-- mscs begin -->\n";
     # Print the select box:
@@ -111,25 +113,23 @@ function fnSelectCategoryShowHook( $m_isUpload = false, $m_pageObj ) {
     }
 
     $m_pageObj->$m_place .= "</select><span id='sdd'></span>";
-    $m_pageObj->$m_place .= "&nbsp;<input type='button' value='Hinzuf&uuml;gen' onclick=\"addKat(1)\">";
-    $m_pageObj->$m_place .= "<br><b>Neue Unterkategorie: </b><input type='text' value='' size='10' id='new_name'>";
-    $m_pageObj->$m_place .= "&nbsp;<input type='button' value='erstellen' onclick=\"neu()\">";
-    $m_pageObj->$m_place .= "<br>(wird in vorrausgew&auml;hlter Oberkategorie erstellt)<br><br>";
+    $m_pageObj->$m_place .= "&nbsp;<input type='button' value='". wfMsg( 'selectcategory-add' ) ."' onclick=\"addKat(1)\">";
+    $m_pageObj->$m_place .= "<br><b>". wfMsg( 'selectcategory-untercat' ) .": </b><input type='text' value='' size='10' id='new_name'>";
+    $m_pageObj->$m_place .= "&nbsp;<input type='button' value='". wfMsg( 'selectcategory-go' ) ."' onclick=\"neu()\">";
+    $m_pageObj->$m_place .= "<br>(". wfMsg( 'selectcategory-untercat-hinw' ) .")<br><br>";
     
     
-    # für die schon hinzugefügten Kategorien
-    #Array $m_pageCats enthaelt alle kategorien der Seite
-    #echo count($m_pageCats);
+    #all added categories
     
     fnCleanTextbox($m_pageObj);
     
     if(count($m_pageCats) == 0 AND $wgWarnNoCat) { # warn no Category
     
-      $m_pageObj->$m_place .= "<div id='WarnNoCat'>VORSICHT: Diese Seite enth&auml;lt noch keine Kategorie. Bitte f&uuml;gen Sie zuerst eine Kategorie hinzu!</div>";
+      $m_pageObj->$m_place .= "<div id='WarnNoCat'>". wfMsg( 'selectcategory-warnnocat' ) ."</div><div id='msc_added'>";
     
-    } else { #groesser 0
+    } else { #more than zero
     
-      $m_pageObj->$m_place .= "<b>Bereits vergebene Kategorien:</b><br><div id='msc_added'>";
+      $m_pageObj->$m_place .= "<b>". wfMsg( 'selectcategory-cats' ) .":</b><br><div id='msc_added'>";
     
       foreach($m_pageCats as $m_cat =>$m_depth ){
     
@@ -225,7 +225,7 @@ function fnSelectCategoryGetAllCategories($m_sub_cats) {
     # Process the resulting rows:
     while ( $m_row = $m_dbObj->fetchRow( $m_res ) ) {
     
-      $cat=strtr($m_row['title'], '_', ' '); // alle unterstriche durch leerzeichen ersetzen -> Datenbank
+      $cat=strtr($m_row['title'], '_', ' '); //database
       
       $m_allCats += array( $cat => 0 );
       if($m_sub_cats == true){
@@ -247,7 +247,7 @@ function fnCategoryGetChildren($kat){
   ksort($arr_childkats);
 
   foreach($arr_childkats as $key => $kat) {
-  $unterkat[] = strtr($key, '_', ' '); // alle unterstriche durch leerzeichen ersetzen -> Datenbank
+  $unterkat[] = strtr($key, '_', ' '); //database
   }
   if (is_array($unterkat)) {
   $unterkat = implode ( '|',$unterkat);
@@ -264,15 +264,13 @@ function fnSelectCategoryGetChildren( $m_root, $m_depth = 1 ) {
   # Initialize return value:
   $m_allCats = array();
 
-
-
   # Get a database object:
   $m_dbObj =& wfGetDB( DB_SLAVE );
   # Get table names to access them in SQL query:
   $m_tblCatLink = $m_dbObj->tableName( 'categorylinks' );
   $m_tblPage = $m_dbObj->tableName( 'page' );
 
-  $m_root=strtr($m_root, ' ', '_'); // alle leerzeichen durch unterstriche ersetzen -> Datenbank
+  $m_root=strtr($m_root, ' ', '_'); //database
 
   # The normal query to get all children of a given root category:
   $m_sql = "  SELECT tmpSelectCatPage.page_title AS title
@@ -290,13 +288,9 @@ function fnSelectCategoryGetChildren( $m_root, $m_depth = 1 ) {
     }
     # Add current entry to array:
     $m_allCats += array($m_row['title'] => $m_depth);
-    
-    #damit es nicht automatisch eine ebene tiefer geht - ms
-    #$m_allCats += fnSelectCategoryGetChildren( $m_row['title'], $m_depth + 1 );
   }
   # Free result:
   $m_dbObj->freeResult( $m_res );
-
 
   # Afterwards return the array to the upper recursion level:
   return $m_allCats;
@@ -313,8 +307,6 @@ function fnCleanTextbox( $m_pageObj ) {
   # Get localised namespace string:
   $m_catString = strtolower( $wgContLang->getNsText( NS_CATEGORY ) );
   # The regular expression to find the category links:
-  #$m_pattern = "\[\[({$m_catString}|category):([^\|\]]*)(\|{{PAGENAME}}|)\]\]";
-  #$m_pattern = "\[\[({$m_catString}|category|Category):([^\|\]]*)(\|[äöüÄÖÜ0-9A-Za-z#\s.,;:-+{}()&]*+|)\]\]";
   $m_pattern = "\[\[({$m_catString}|category|Category):([^\|\]]*)(\|[^\|\]]*)?\]\]";
   $m_replace = "$2";
   # The container to store the processed text:
@@ -356,7 +348,7 @@ function fnGetPageCategories() {
     # Process the resulting rows:
     while ( $m_row = $m_dbObj->fetchRow( $m_res ) ) {
 
-      $cat=strtr($m_row['title'], '_', ' '); // alle unterstriche durch leerzeichen ersetzen -> Datenbank
+      $cat=strtr($m_row['title'], '_', ' '); //database
       $m_catLinks[$cat] = $m_row['cl_sortkey'];
     }
     # Free result:
@@ -378,8 +370,6 @@ function fnSelectCategoryCheckConditions ($m_isUpload, $m_pageObj ) {
   if ($m_isUpload == true) {
     return true;
   }
-
-
 
   $ns = $wgTitle->getNamespace();
   if (array_key_exists ($ns, $wgSelectCategoryNamespaces)) {
@@ -406,16 +396,15 @@ $wgAjaxExportList[] = 'fnNewCategory';
 function fnNewCategory($title,$category) {
 
   $title = Title::newFromText( $title );
-  
-  //$title = $wgPageName.$title;
-  if ($title->getArticleID()){ //artikel schon vorhanden
+
+  if ($title->getArticleID()){ //page already exists
   	
   return "no".$wgPageName.$title->getArticleID();
   
   }
   #if ($category !=0){
   #$category = "[[Kategorie:".$category."]]";
-  #}	
+  #}  	
 	$text = $category;
 	$summary = "MsCatSelect";
  

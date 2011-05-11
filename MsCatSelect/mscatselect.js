@@ -4,9 +4,9 @@ window.addEvent('domready', function() {
      
           sortkey = el.value.split('|');
           if(sortkey[1]){
-          sortkey_text = sortkey[1]
+          sortkey_text = sortkey[1];
           } else {
-          sortkey_text = wgTitle
+          sortkey_text = wgTitle;
           }
           add_sortkey(el,sortkey[0],sortkey_text);
      
@@ -75,21 +75,16 @@ function addKat(new_kat) {
 
   if (new_kat==1) {
     for (l=4;l>0;l--){
-        //alert(l);
+
         if (dd = document.getElementById('dd_'+l)) {
         
-          //alert('try'+dd.value);
-  
           if(dd.value!= 0) {
-          new_kat = dd.value;
+            new_kat = dd.value;
+            break; //damit nur der hinterste wert genommen wird
+          } 
   
-          break; //damit nur der hinterste wert genommen wird
-          } else {
-          //alert('false'+dd.value); //kat ---
-          }
-  
-        }
-     }
+        } //if
+     } //for
      
    
   }
@@ -106,28 +101,20 @@ function addKat(new_kat) {
 
 function getUnterkat(kat,ebene){
 
-//alert(kat+' - '+ebene);
-
   sajax_do_call( 'fnCategoryGetChildren', [kat], 
         			function (result) {
         			warning = result.responseText;
-              //alert(warning);
               
               //alte dropdowns löschen
               for (i=ebene+1;i<=4;i++){
                   if (child = document.getElementById('dd_'+i)) {
-                  //child = document.getElementById('dd_'+i);
-                  child.parentNode.removeChild(child); 
+                    child.parentNode.removeChild(child); 
                   }
               }
               
               if (warning!="" && ebene<4) {
-              //alert(warning);
-              createDD(warning,ebene+1);
-              } else {
-              //alert('vorbei');
-              //document.getElementById('sdd').appendData("-");
-              }
+                createDD(warning,ebene+1);
+              } 
               
               });
 
@@ -139,7 +126,6 @@ function createDD (str_werte,ebene)  {
   var werte = str_werte.split("|");
 	// Select erstellen       
 
-
      var objSel = document.createElement("select");
      objSel.id = 'dd_'+ebene;
      
@@ -147,10 +133,7 @@ function createDD (str_werte,ebene)  {
         
         var sel = this.options[this.selectedIndex];
           if (sel != 0) {
-          //alert(werte[sel-1]);
-          //alert(sel.value);
-          getUnterkat(sel.value,ebene);
-          
+            getUnterkat(sel.value,ebene);
           }
         
         };
