@@ -41,15 +41,17 @@ FancyUpload3.Attach = new Class({
 				return false;
 			},
 			mouseenter: function() {
+   
 				this.addClass('hover');
-				self.reposition();
+				self.reposition(); //die groeße des buttons wird neu berechner -> swiff.uploader.js
 			},
 			mouseleave: function() {
 				this.removeClass('hover');
 				this.blur();
 			},
 			mousedown: function() {
-				this.focus();
+				//this.focus(); sonst muss man zwei mal klicken
+				self.reposition();  //die groeße des buttons wird neu berechner -> swiff.uploader.js
 			}
 		});
 		

@@ -1,3 +1,9 @@
+#show_upload.hover{
+
+   -moz-opacity: 0.7; 
+   opacity: 0.7; 
+}
+
 .neu{
   display:block ;
   /*border:1px solid red;*/
