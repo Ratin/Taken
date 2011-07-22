@@ -19,7 +19,7 @@ $messages['de'] = array(
         'selectcategory-untercat-hinw' => 'wird in vorrausgew&auml;hlter Oberkategorie erstellt',
         'selectcategory-warnnocat' => 'VORSICHT: Diese Seite enth&auml;lt noch keine Kategorie. Bitte f&uuml;gen Sie zuerst eine Kategorie hinzu!',
         'selectcategory-cats' => 'Bereits vergebene Kategorien', 
-        'selectcategory-add' => 'Hinzuf&uuml;gen',
+        'selectcategory-add' => 'hinzuf&uuml;gen',
         'selectcategory-go' => 'erstellen',       
 );
 

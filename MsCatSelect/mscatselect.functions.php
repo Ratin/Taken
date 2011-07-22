@@ -20,7 +20,7 @@ function fnSelectCategoryShowHook( $m_isUpload = false, $m_pageObj ) {
 	  
     # Register CSS file for our select box:
     global $wgOut, $wgScriptPath,$wgWarnNoCat;
-    global $wgTitle;
+    global $wgTitle, $wgRequest;
     
     $wgOut->addHtml('<style>
     .mscs{
@@ -61,8 +61,14 @@ function fnSelectCategoryShowHook( $m_isUpload = false, $m_pageObj ) {
     if( !$m_isUpload ) {
       # Extract all categorylinks from editfield:
       #$m_pageCats = fnSelectCategoryGetPageCategories( $m_pageObj );
-      fnCleanTextbox($m_pageObj);
-      $m_pageCats = fnGetPageCategories();
+      #fnCleanTextbox($m_pageObj);
+      
+      if(	$wgRequest->getVal("preload") != "") {
+        # neue seiten die mit preload angelegt werden
+        $m_pageCats = fnGetPageCategories($wgRequest->getVal("preload"));
+      } else {
+        $m_pageCats = fnGetPageCategories();
+      }
       
       # Never ever use editFormTextTop here as it resides outside the <form> so we will never get contents
       $m_place = 'editFormTextAfterWarn';
@@ -321,27 +327,28 @@ function fnCleanTextbox( $m_pageObj ) {
   return true;
 }
 
-function fnGetPageCategories() {
+function fnGetPageCategories($title = "") {
 
-  if (array_key_exists('SelectCategoryList', $_POST)) {
-    # We have already extracted the categories, return them instead
-    # of extracting zero categories from the page text.
-    $m_catLinks = array();
-    foreach( $_POST['SelectCategoryList'] as $m_cat ) {
-      $m_catLinks[ $m_cat ] = true;
-    }
-    return $m_catLinks;
-  }
-
-    global $wgTitle,$wgArticleId;
+  global $wgTitle,$wgArticleId;
 
     $m_catLinks = array();
     # Get a database object:
     $m_dbObj =& wfGetDB( DB_SLAVE );
     # Get table names to access them in SQL query:
     $m_tblCatLink = $m_dbObj->tableName( 'categorylinks' );
-    # Automagically detect root categories:
-    $m_sql = "SELECT cl_to AS title, cl_sortkey FROM $m_tblCatLink  WHERE cl_from = '".$wgTitle->getArticleID()."'"; 
+    
+    if($title != ""){
+    
+      $m_tblPage = $m_dbObj->tableName( 'page' );
+      $m_sql = "SELECT cl_to AS title, cl_sortkey FROM $m_tblCatLink l, $m_tblPage p WHERE p.page_title = '".$title."' AND p.page_id = l.cl_from"; 
+    
+    } else {
+    
+      $m_sql = "SELECT cl_to AS title, cl_sortkey FROM $m_tblCatLink  WHERE cl_from = '".$wgTitle->getArticleID()."'"; 
+      
+    }
+
+    
     $m_res = $m_dbObj->query( $m_sql, __METHOD__ );
     # Process the resulting rows:
     while ( $m_row = $m_dbObj->fetchRow( $m_res ) ) {
