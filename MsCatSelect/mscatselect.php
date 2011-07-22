@@ -1,8 +1,7 @@
 <?php
 
-# Setup and Hooks for the SelectCategory extension, an extension of the
-# edit box of MediaWiki to provide an easy way to add category links
-# to a specific page.
+# Setup and Hooks for the MsCatSelect extension
+
 
 if( !defined( 'MEDIAWIKI' ) ) {
         echo( "This file is an extension to the MediaWiki software and cannot be used standalone.\n" );
