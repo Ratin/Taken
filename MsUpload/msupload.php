@@ -23,10 +23,9 @@ require_once($dir.'msupload_body.php');
 
 function MSLSetup() {
 
-  global $wgOut, $wgScriptPath,$wgJsMimeType,$wgHooks,$wgFrameworkLoaded;
+  global $wgOut, $wgScriptPath,$wgJsMimeType,$wgHooks,$wgFrameworkLoaded,$wgTitle;
 
-	$dir = dirname(__FILE__).'/';
-	
+
 	$path =  $wgScriptPath.'/extensions/MsUpload';
   
   if (!$wgFrameworkLoaded){
@@ -34,7 +33,7 @@ function MSLSetup() {
   $wgFrameworkLoaded = true;  
   }
 	
-  if(isset($wgTitle) AND $wgTitle->getArticleID()==0){
+  if(isset($wgTitle) AND $wgTitle->getArticleID()!=0){
     
     $wgOut->addScriptFile( $path.'/source/Fx.ProgressBar.js' );
     $wgOut->addScriptFile( $path.'/source/Swiff.Uploader.js' );
