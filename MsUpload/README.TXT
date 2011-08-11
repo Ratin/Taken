@@ -6,4 +6,6 @@ $wgMSU_AutoIndex = true;  #fileindexer
 require_once("$IP/extensions/MsUpload/msupload.php");
 ##End  --------------------------------------- MsUpload
 
+#diese Extension benötigt die Extension MsInsert. Es genügt wenn diese als Ordner im Extensionverzeichnis vorhanden ist.
+
 
