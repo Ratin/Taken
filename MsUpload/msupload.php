@@ -7,11 +7,11 @@ if(! defined('MEDIAWIKI')) {
 }
 
 $wgExtensionCredits['parserhook'][] = array(
-	'name' => 'taken-MsUpload',
-	'url'  => 'http://www.ta-ken.de/extensions',
+	'name' => 'MsUpload',
+	'url'  => 'http://www.ratin.de/wiki.html',
 	'description' => 'Diese Extension macht Uploads/Multiuploads direkt im Editor möglich',
-	'version' => '7.7',
-	'author' => '[mailto:info@ta-ken.de info@ta-ken.de] | ta-ken'
+	'version' => '7.8',
+	'author' => '[mailto:info@ratin.de info@ratin.de] | Ratin',
 );
 
 $wgAvailableRights[] = 'msupload';
@@ -35,8 +35,6 @@ function MSLSetup() {
   }
 	
   if(isset($wgTitle) AND $wgTitle->getArticleID()==0){
-    
-    #$wgOut->addScriptFile( $path.'/mootools/mootools-core-1.3.js' );
     
     $wgOut->addScriptFile( $path.'/source/Fx.ProgressBar.js' );
     $wgOut->addScriptFile( $path.'/source/Swiff.Uploader.js' );
