@@ -13,9 +13,9 @@ if(! defined('MEDIAWIKI')) {
 
 $wgExtensionCredits['parserhook'][] = array(
 	'name' => 'MsLinks',
-	'url'  => 'http://www.ratin.de',
+	'url'  => 'http://www.ratin.de/wiki.html',
 	'description' => 'Erzeugt einem Link mit dem passenden Icon sowie einen Direkt- und Versionslink',
-	'version' => '2.$',
+	'version' => '2.4',
 	'author' => '[mailto:info@ratin.de info@ratin.de] | Ratin'
 );
  

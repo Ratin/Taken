@@ -1,6 +1,6 @@
-##Start Martin Keyler - MsNews
+//Start----------------MsNews
 require_once("$IP/extensions/MsNews/msnews.php");
-##Start Martin Keyler - MsNews
+//End------------------MsNews
 
 
 --------------------------------- 

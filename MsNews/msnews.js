@@ -10,4 +10,3 @@ window.addEvent('domready', function() {
     });
    } //if
 });
-
