@@ -105,12 +105,15 @@ function fnSelectCategoryShowHook( $m_isUpload = false, $m_pageObj ) {
 
     
     global $wgFrameworkLoaded;
+    
+    $path =  $wgScriptPath.'/extensions/MsCatSelect';
+    
     if (!$wgFrameworkLoaded){
-    $wgOut->addScriptFile( $wgScriptPath.'/extensions/MsCatSelect/mootools-core-1.3.2.js' );
+    $wgOut->addScriptFile( $path.'/mootools-core-1.3.2.js' );
     $wgFrameworkLoaded = true;  
     }
 
-    $wgOut->addScriptFile( $wgScriptPath.'/extensions/MsCatSelect/mscatselect.js' );
+    $wgOut->addScriptFile( $path.'/mscatselect.js' );
     $m_pageObj->$m_place .= "<select id='dd_1' name='auswahl' onchange=\"getUnterkat(this.value,1)\"><option value=''>----</option>";
 
      $i=0;

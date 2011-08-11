@@ -12,7 +12,7 @@ if( !defined( 'MEDIAWIKI' ) ) {
 $wgExtensionCredits['parserhook'][] = array(
         'name'           => 'MsCatSelect',
         'url'  => 'http://www.mediawiki.org/wiki/Extension:MsCatSelect',
-        'version'        => '4.1',
+        'version'        => '4.2',
         'author' => '[mailto:info@ratin.de info@ratin.de] | Ratin',
         'description' => 'Mit dieser Extension kann eine Seite einer bestehenden oder neuen Kategorie per DropDown zugewiesen werden oder auch neue Unterkategorien erstellt werden.',
         'descriptionmsg' => 'selectcategory-desc',
