@@ -1,5 +1,6 @@
-//Start----------------MsLinks
-require_once("$IP/extensions/MsLinks/mslinks.php");
+//Start----------------MsLinks_status
+$wgStatusList = array("status 1","status 2","status 3","status 4");
+require_once("$IP/extensions/MsLinks_status/mslinks_status.php");
 $wgFileTypes = array("no" => "no_icon.gif",
                         "jpg" => "image_icon.png", 
                         "gif" => "image_icon.png", 
@@ -21,4 +22,19 @@ $wgFileTypes = array("no" => "no_icon.gif",
                         "dot" => "doc_icon.png",
                         "dotx" => "doc_icon.png"
                     );
-//Ende----------------MsLinks
+//Ende----------------MsLinks_status
+
+
+
+
+---------Für Benutzung der Status Funktion----------------
+Datenbank muss zuerst erstellt werden:
+
+1. mslinks.js (Zeile 15)
+2. Zeite aktivieren
+3. Beliebige Seite im wiki öffnen
+4. Meldung bestätigen
+5. Zeile deaktivieren
+
+
+{{#l:status|Dateiname.ext}}
