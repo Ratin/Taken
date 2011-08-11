@@ -1,7 +1,6 @@
 <?php
 
-# Setup and Hooks for the MsCatSelect extension
-
+# Setup and Hooks for the MsComment extension
 
 if( !defined( 'MEDIAWIKI' ) ) {
         echo( "This file is an extension to the MediaWiki software and cannot be used standalone.\n" );
@@ -12,21 +11,17 @@ if( !defined( 'MEDIAWIKI' ) ) {
 $wgExtensionCredits['parserhook'][] = array(
         'name'           => 'MsComment',
         'url'  => 'http://www.ratin.de/wiki.html',
-        'version'        => '1.1',
+        'version'        => '1.2',
         'author' => '[mailto:info@ratin.de info@ratin.de] | Ratin',
         'description' => 'Mit dieser Extension kann einer Datei manuell ein Kommentar hinzugef&uuml;gt werden.',
         'descriptionmsg' => 'selectcategory-desc',
 );
 
 ## Load the file containing the hook functions:
-
 $dir = dirname(__FILE__).'/';
 require_once($dir.'mscomment_body.php');
 
-
 $wgHooks['ParserFirstCallInit'][] = 'MsCommentSetup';
-#$wgHooks['LanguageGetMagic'][]    = 'MsStatusMagic';
-
  
 function MsCommentSetup( &$parser ) {    
  global $wgScriptPath,$wgOut,$wgTitle,$wgFrameworkLoaded;
@@ -46,7 +41,6 @@ function MsCommentSetup( &$parser ) {
 			'href' => $path.'/mscomment.css'
 	 ));
 		
-	#$parser->setHook( 'msstatus', 'MsStatusRender' ); 
   }	
 	return true;
 }

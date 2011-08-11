@@ -2,24 +2,20 @@ function vorlage_sel(i){
 
   if(i!=0){
   sajax_do_call( 'wfAjaxVorlage', [vorlagen[i-1]], 
-        			function (result) {
-        				//obj.processResult(result, file.name)
-        				warning = result.responseText;
+      function (result) {
+        	//obj.processResult(result, file.name)
+        	warning = result.responseText;
         				
-        				if(warning != "") {
-                
-                vorlage_insert(warning,'\n','\n');
-                //vorlage_insert(warning,'\n<!--Vorlage Start-->\n','\n<!--Vorlage Ende-->\n');
-
-                }
+        	if(warning != "") {
+            vorlage_insert(warning,'\n','\n');
+            //vorlage_insert(warning,'\n<!--Vorlage Start-->\n','\n<!--Vorlage Ende-->\n');
+          }
         			
                   
-        			}
-        		);
-
+      } //function
+  );
   } //if
 }
-
 
 function vorlage_insert(inhalt,tagOpen,tagClose) {
 
@@ -38,7 +34,6 @@ function vorlage_insert(inhalt,tagOpen,tagClose) {
                 else if (document.body)
                         var winScroll = document.body.scrollTop;
                         
-     
                 //get current selection
                 this.editor.focus();
                 var range = document.selection.createRange();
@@ -108,18 +103,14 @@ function vorlage_insert(inhalt,tagOpen,tagClose) {
         
 }
 
-
-
 function create_btn_insert() {
     
-
     	// Select erstellen       
      var objSel = document.createElement("select");
      objSel.onchange= function(){
         
         var sel = this.options[this.selectedIndex].value;
         vorlage_sel(sel);
-        
         
         };
           

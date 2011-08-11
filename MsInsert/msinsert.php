@@ -5,36 +5,24 @@ if(! defined('MEDIAWIKI')) {
 }
 
 $wgExtensionCredits['parserhook'][] = array(
-	'name' => 'taken-MsInsert',
-	'url'  => 'http://www.ta-ken.de/extensions',
+	'name' => 'MsInsert',
+  'url'  => 'http://www.ratin.de/wiki.html',
 	'description' => 'Per Dropdown koennen bestimmte Seiten als Vorlage in den Editor geladen werden.',
-	'version' => '1.9',
-	'author' => '[mailto:info@ta-ken.de info@ta-ken.de] | ta-ken'
+	'version' => '2.0',
+	'author' => '[mailto:info@ratin.de info@ratin.de] | Ratin',
 );
 
-  #$dir = dirname(__FILE__).'/';
-  #require_once($dir.'msinsert_body.php');
-
-#$wgExtensionFunctions[] = "wfMsInsertRender";
-#$wgHooks['EditPage::showEditForm:initial'][] = 'wfMsInsertRender';
-#$wgHooks['BeforePageDisplay'][]='MSISetup';
 $wgHooks['EditPage::showEditForm:initial'][] = 'MSISetup';
-
-#$wgHooks['AlternateEdit'][] = 'MSISetup';
-
-#$wgHooks['EditPageBeforeEditChecks'][] = 'MSISetup';
 
 function MSISetup() {
 
   global $wgOut,$wgScriptPath,$wgJsMimeType,$wgVorlagen;
 
-
-  #$wgOut->addScript( '<script type="text/javascript" src="/extensions/MsInsert/msinsert.js"></script>');
+  $path =  $wgScriptPath.'/extensions/MsInsert';
   
   $vorlagen = array();
   foreach($wgVorlagen as $key => $vorlage) {
-  
-        
+
         $title = Title::newFromText(htmlentities($vorlage));
         $title2 = Title::newFromText($vorlage);
     
@@ -49,8 +37,7 @@ function MSISetup() {
 
   $vorlagen = 'var vorlagen = new Array("' . implode ( '", "', $vorlagen ) . '");';
   $wgOut->addScript( "<script type=\"{$wgJsMimeType}\">$vorlagen</script>\n" );
-  #$wgOut->addScriptFile( $wgScriptPath.'/extensions/MsInsert/msinsert.js' );
-  $wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"$wgScriptPath/extensions/MsInsert/msinsert.js\">".$bla."</script>\n");
+  $wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"$path/msinsert.js\"></script>\n");
 	$wgOut->addScript( "<script type=\"{$wgJsMimeType}\">hookEvent(\"load\",create_btn_insert);</script>\n" );
   
     return true;
@@ -61,14 +48,10 @@ function wfAjaxVorlage($title)
 {
  $test = $title;
  $title = Title::newFromText($title);
-    
         if( $title && $title->exists() ) {
-        
-        
             $revision = Revision::newFromTitle($title);
             return $revision->getText();
         } else {
             return $test;
-        }
-        
+        }   
 }

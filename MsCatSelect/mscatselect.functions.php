@@ -103,8 +103,10 @@ function fnSelectCategoryShowHook( $m_isUpload = false, $m_pageObj ) {
             array_push($unter_cat,$m_string);
          }
 
+    
+    global $wgFrameworkLoaded;
     if (!$wgFrameworkLoaded){
-    $wgOut->addScriptFile( $wgScriptPath.'/extensions/MsCatSelect/mootools-core-1.3.js' );
+    $wgOut->addScriptFile( $wgScriptPath.'/extensions/MsCatSelect/mootools-core-1.3.2.js' );
     $wgFrameworkLoaded = true;  
     }
 
