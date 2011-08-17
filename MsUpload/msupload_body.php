@@ -54,23 +54,30 @@ function wfMsUploadDoAjax($file) {
     return  substr($wgUser->editToken(),2);
 }
 
-$wgAjaxExportList[] = 'wfMsUploadKat';
-function wfMsUploadKat() {
-  
-  global $wgUploadKategorien;
-  //global $wgHauptkategorien;
-  //global $m_allCats_os;
-  if(!$wgUploadKategorien){
-    $wgUploadKategorien = fnSelectCategoryGetAllCategories(false);
-    
-    foreach ($wgUploadKategorien as $kat => $las) {
-    $kategorien[]= $kat;
-    }
-    
-    $kat = implode ( '|', $kategorien);
-  } else {
-    $kat = implode ( '|', $wgUploadKategorien);
-  }
-  
-  return $kat;
+$wgAjaxExportList[] = 'wfMsUploadSaveKat';
+function wfMsUploadSaveKat($name,$kat) {
+
+        global $wgContLang,$wgUser;
+        
+        $mediaString = strtolower( $wgContLang->getNsText( NS_FILE ) );
+        
+        $title = $mediaString.':'.$name;
+        $text = "\n[[".$kat."]]";
+
+        $wgEnableWriteAPI = true;    
+        $params = new FauxRequest(array (
+        	'action' => 'edit',
+        	'section'=>  'new',
+        	'title' =>  $title,
+        	'text' => $text,
+        	'token' => $wgUser->editToken(),//$token."%2B%5C",
+        ));
+
+        $enableWrite = true; // This is set to false by default, in the ApiMain constructor
+        $api = new ApiMain($params,$enableWrite);
+        #$api = new ApiMain($params);
+        $api->execute();
+        $data = & $api->getResultData();
+        
+  return $mediaString;
 }

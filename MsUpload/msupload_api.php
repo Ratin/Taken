@@ -59,7 +59,7 @@ if (isset($_FILES['Filedata']['name'])) {
     } 
    }
    
-  if(isset($_POST['kat'][$ids])){
+  if(isset($_POST['kat'][$ids])){ #kategorie gesetzt
     $comment = "[[".$_POST['kat_hidden']."]]";  
   }  
     
@@ -190,8 +190,6 @@ if (isset($_FILES['Filedata']['name'])) {
 			  $error = "badaccess-groups";
 		}
 		
-		
-
 
 		// Use comment as initial page text by default
 		if ( is_null( $text ) )

@@ -55,19 +55,8 @@ function loadMsUpload(){
                   }
                 // errorhandling
              
-                }
+                } //else
        				
-                //add_kat(file,startlink,false);
-                //startlink.innerHTML = startlink_text;
-                //startlink.addEvent('click', function() {
-                //file.start();	 
-                //cat =  "[[Kategorie:" + categories[file.id].join("]][[Kategorie:") + "]]";
-                //new Element('span', { id: 'categories-'+file.id, value: cat}).inject(startlink_element, 'bottom');
-        		    //this.fileStart(file);
-        		    //ids = file.id;
-        		    //}.bind(up));
-        		    
-        				
         			});
         			
         			if(firsttime==true){ //nur beim ersten mal
@@ -114,7 +103,7 @@ function loadMsUpload(){
       //autokat
       if(autoKat){
         if(wgNamespaceNumber==14){
-          new Element('input', {name:'kat['+file.id+']', 'class':'check_index',type: 'checkbox', 'checked': true}).inject(file.ui.title, 'after');
+          new Element('input', {id:'kat-'+file.id,name:'kat['+file.id+']', 'class':'check_index',type: 'checkbox', 'checked': true}).inject(file.ui.title, 'after');
     	    new Element('span', {'class':'check_span',html: wgPageName}).inject(file.ui.title, 'after');
     	    
         }
@@ -141,70 +130,6 @@ function loadMsUpload(){
   
   
   } 
-   
-    
-	function add_kat(file,startlink,dropdown){
-	
-	      if(dropdown==false){
-        
-        new Element('input', {id: 'cat-'+file.id, value:''}).inject(startlink, 'before');
-
-        } else {
-    	      sel = new Element('select', {id: 'sel-'+file.id, 'class':'sel'}).inject(startlink, 'before');
-            
-            sel.options[sel.options.length] = new Option('Kategorie', 0);
-            sel.onchange= function(){
-            
-            var asel = this.options[this.selectedIndex].value;
-            //categories[file.id].push(categories[asel]); //Kategorie zum array hinzufügen
-            
-            new Element('span', {html: categories[asel]}).inject(this, 'after');
-            new Element('input', {type: 'checkbox', 'checked': true}).inject(this, 'after');
-            sel.selectedIndex = 0;
-    
-            
-            };
-            
-            for (var i = 0; i < categories.length; ++i){
-                sel.options[sel.options.length] = new Option(categories[i], i);
-            }
-            
-        }
-	     /*
-	      sajax_do_call( 'wfMsUploadKat', [], 
-        function (result) {
-
-        info = result.responseText;
-        var kat = info.split('|'); 
-        
-        sel = new Element('select', {id: 'sel-'+file.id, 'class':'sel'}).inject(file.ui.element, 'top');
-        
-        sel = $('sel-' + file.id);
-        sel.options[sel.options.length] = new Option('Kategorie', 0);
-        sel.onchange= function(){
-        
-        var asel = this.options[this.selectedIndex].value;
-        
-        categories[file.id].push(kat[asel]); //Kategorie zum array hinzufügen
-        
-        new Element('span', {html: kat[asel]}).inject(this, 'after');
-        new Element('input', {type: 'checkbox', 'checked': true}).inject(this, 'after');
-        sel.selectedIndex = 0;
-
-        
-        };
-        
-        for (var i = 0; i < kat.length; ++i){
-            sel.options[sel.options.length] = new Option(kat[i], i);
-        }
-        
-        
-        
-        });
-	      */
-
-	
-	}
 	
 	/* Uploader instance */
 	var ids = 0;
@@ -231,19 +156,8 @@ function loadMsUpload(){
 				return false;
 			});
 	
-
-
-
-      /*
-      sajax_do_call( 'wfMsUploadKat', [], 
-        function (result) {
-        info = result.responseText;
-        categories = info.split('|');
-        });
-       */ 
     },
-  
-    
+
 		onSelectFail: function(files) {
 			files.each(function(file) {
 				new Element('li', {
@@ -283,9 +197,9 @@ function loadMsUpload(){
            $('input_change-' + file.id).destroy(); 
            file.ui.title.set('styles', {'display': 'inline'});
            file.ui.title.innerHTML = input_change;
-         } 
-         }
-        
+         } //if 
+         } //if
+
         
     },
     
@@ -303,7 +217,6 @@ function loadMsUpload(){
       files.each(function(file) {
 				
 				
-				
         bar = $('bar-' + file.id);
         bar.set('styles', {'display': 'none'});
       
@@ -315,14 +228,23 @@ function loadMsUpload(){
 			}, this);	
 		
 		},       
-		//--------
+
+
 		onFileComplete:function(file,response){
 		
 		//this.fileStop('file-'+file.id);
 		//file.stop();
-      
-    
-    
+		  if($('kat-' + file.id)){
+		  if($('kat-' + file.id).checked == true){ //soll die Kategorie gesetzt werden
+        
+          sajax_do_call( 'wfMsUploadSaveKat', [file.name,wgPageName],
+          function (response) {
+             //alert(response.responseText);
+          });
+        
+      } //if
+      } //if
+
 		},
 		
     onFileProgress:function(file){

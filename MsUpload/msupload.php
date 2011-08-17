@@ -10,7 +10,7 @@ $wgExtensionCredits['parserhook'][] = array(
 	'name' => 'MsUpload',
 	'url'  => 'http://www.ratin.de/wiki.html',
 	'description' => 'Diese Extension macht Uploads/Multiuploads direkt im Editor möglich',
-	'version' => '7.8',
+	'version' => '7.9',
 	'author' => '[mailto:info@ratin.de info@ratin.de] | Ratin',
 );
 
